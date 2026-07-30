@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finpol — Impara a Investire in Autonomia</title>
+    <meta name="description"
+        content="Portafogli di esempio, video educativi e strumenti pratici per chi vuole capire come funziona il mondo degli investimenti — senza consulenti e senza gergo complicato.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Finpol — Impara a Investire in Autonomia">
+    <meta property="og:description"
+        content="Portafogli di esempio, video educativi e strumenti pratici. Educazione finanziaria indipendente.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://finpol.it">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ===========================
+         NAVBAR
+    =========================== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="../logo/logo_con_scritta_render.png" alt="Finpol" height="164">
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#portafogli" class="nav-link">Portafogli</a>
+            </div>
+            <div class="nav-actions">
+                <a href="../quiz/index.html" class="btn-nav" id="nav-cta">Scopri il tuo profilo <i
+                        class="fa-solid fa-arrow-right"></i></a>
+                <button class="hamburger" id="hamburger" aria-label="Apri menu" aria-expanded="false">
+                    <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===========================
+         HERO
+    =========================== -->
+    <section class="hero">
+        <div class="glow-blob glow-top-left"></div>
+        <div class="glow-blob glow-top-right"></div>
+        <div class="hero-inner container">
+            <div class="hero-content">
+                <div class="hero-badge reveal">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    Educazione Finanziaria Indipendente
+                </div>
+                <h1 class="reveal">
+                    Smetti di tenere i soldi fermi.<br>
+                    Impara a <span class="gradient-text">investire da solo</span>.
+                </h1>
+                <p class="hero-sub reveal">
+                    Portafogli di esempio, video educativi e strumenti pratici per chi ha dei risparmi e vuole capire
+                    come farli crescere.
+                </p>
+                <div class="hero-ctas reveal">
+                    <a href="../quiz/index.html" class="btn-primary btn-large" id="hero-quiz-cta">
+                        <i class="fa-solid fa-chart-simple"></i> Scopri il tuo profilo
+                    </a>
+                    <a href="#portafogli" class="btn-ghost" id="hero-portfolios-link">
+                        Vedi i portafogli <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                </div>
+                <p class="hero-trust reveal">
+                    <i class="fa-solid fa-shield-halved"></i> Contenuto educativo &nbsp;·&nbsp;
+                    <i class="fa-solid fa-circle-check"></i> Nessun conflitto di interesse &nbsp;·&nbsp;
+                    <i class="fa-solid fa-lock-open"></i> Accesso gratuito
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <!-- ===========================
+         PER CHI È
+    =========================== -->
+    <section class="for-who" id="chi-e" aria-label="Per chi è Finpol">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Per chi è Finpol?</h2>
+                <p>Contenuto pensato per chi ha risparmi ma non sa da dove iniziare.</p>
+            </div>
+            <div class="who-grid">
+                <div class="who-card reveal">
+                    <div class="who-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                    <h3>Hai risparmi fermi in banca</h3>
+                    <p>Sai che l'inflazione erode lentamente il tuo potere d'acquisto, ma non sai come muoverti in modo
+                        consapevole.</p>
+                </div>
+                <div class="who-card reveal">
+                    <div class="who-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3>Vuoi investire in autonomia</h3>
+                    <p>Hai sentito parlare di ETF, PAC e portafogli diversificati, ma non hai ancora capito come
+                        funzionano concretamente.</p>
+                </div>
+                <div class="who-card reveal">
+                    <div class="who-icon"><i class="fa-solid fa-database"></i></div>
+                    <h3>Vuoi dati, non opinioni</h3>
+                    <p>Sei stanco di consigli generici. Vuoi capire i meccanismi reali con numeri, fonti e ragionamenti
+                        verificabili.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+         DISCLAIMER BANNER (obbligatorio prima dei portafogli)
+    =========================== -->
+    <section class="disclaimer-section" id="portafogli" aria-label="Nota educativa">
+        <div class="container">
+            <div class="disclaimer-banner reveal">
+                <div class="disclaimer-icon"><i class="fa-solid fa-circle-info"></i></div>
+                <div class="disclaimer-text-content">
+                    <strong>Nota Educativa Importante:</strong> I portafogli mostrati di seguito sono <strong>esempi
+                        didattici a scopo puramente illustrativo</strong>. Non costituiscono consulenza finanziaria
+                    personalizzata ai sensi del D.Lgs. 58/1998 (TUF) e della Direttiva MiFID II. I rendimenti storici
+                    indicati sono stime basate su dati storici e <strong>non garantiscono rendimenti futuri</strong>.
+                    Ogni investimento comporta rischi, inclusa la possibile perdita del capitale. Per una
+                    raccomandazione personalizzata, rivolgiti a un <a href="https://www.organismocf.it" target="_blank"
+                        rel="noopener">Consulente Finanziario Autonomo iscritto all'OCF</a>.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===========================
+         PORTAFOGLI TIPO
+    =========================== -->
+    <section class="portfolios" aria-label="Portafogli di esempio">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Portafogli di Esempio</h2>
+                <p>Tre composizioni illustrative per tre profili diversi. Solo strumenti, proporzioni e logica — la
+                    scelta finale è sempre tua.</p>
+            </div>
+
+            <div class="portfolio-grid">
+
+                <!-- === PRUDENTE === -->
+                <div class="portfolio-card card-prudente reveal" id="portafoglio-prudente">
+                    <div class="portfolio-header">
+                        <div class="portfolio-badge badge-blue">🔵 Prudente</div>
+                        <div class="portfolio-horizon">
+                            <i class="fa-regular fa-clock"></i> Orizzonte &lt; 5 anni
+                        </div>
+                    </div>
+                    <p class="portfolio-desc">Esempio per chi ha un obiettivo a breve termine o non può tollerare
+                        oscillazioni significative. Priorità alla preservazione del capitale.</p>
+
+                    <div class="allocation-bar" role="img" aria-label="Allocazione: XEON 90%, VWCE 10%">
+                        <div class="bar-seg seg-xeon" style="width:90%" title="XEON / Conto Deposito 90%"></div>
+                        <div class="bar-seg seg-vwce" style="width:10%" title="VWCE 10%"></div>
+                    </div>
+                    <div class="allocation-legend">
+                        <span class="leg-item"><span class="leg-dot dot-xeon"></span>Liquidità 90%</span>
+                        <span class="leg-item"><span class="leg-dot dot-vwce"></span>Azionario 10%</span>
+                    </div>
+
+                    <div class="etf-table">
+                        <div class="etf-row">
+                            <div class="etf-info">
+                                <span class="etf-name">Xtrackers EUR Overnight Rate Swap</span>
+                                <span class="etf-ticker">XEON</span>
+                            </div>
+                            <div class="etf-pct pct-blue">90%</div>
+                        </div>
+                        <div class="etf-alt-note">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            In alternativa: <strong>Conto Deposito Remunerato</strong> (stessa funzione, talvolta tasso
+                            superiore — verificare le condizioni del proprio istituto)
+                        </div>
+                        <div class="etf-row">
+                            <div class="etf-info">
+                                <span class="etf-name">Vanguard FTSE All-World UCITS ETF Acc</span>
+                                <span class="etf-ticker">VWCE</span>
+                            </div>
+                            <div class="etf-pct pct-violet">10%</div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-return">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        Rendimento storico stimato: <strong>~2,5–3,5% annuo nominale</strong>
+                        <span class="return-note">(dipende fortemente dal tasso BCE)</span>
+                    </div>
+                    <p class="portfolio-warning">⚠️ Se l'orizzonte è inferiore a 3 anni, valuta un conto deposito
+                        vincolato anziché un portafoglio ETF.</p>
+                </div>
+
+                <!-- === BILANCIATO === -->
+                <div class="portfolio-card card-bilanciato reveal" id="portafoglio-bilanciato">
+                    <div class="portfolio-header">
+                        <div class="portfolio-badge badge-yellow">🟡 Bilanciato</div>
+                        <div class="portfolio-horizon">
+                            <i class="fa-regular fa-clock"></i> Orizzonte 5–15 anni
+                        </div>
+                    </div>
+                    <p class="portfolio-desc">Esempio per chi ha un orizzonte di medio periodo e può accettare
+                        oscillazioni moderate in cambio di una crescita più significativa nel tempo.</p>
+
+                    <div class="allocation-bar" role="img" aria-label="Allocazione: VWCE 45%, AGGH 45%, SGLN 10%">
+                        <div class="bar-seg seg-vwce" style="width:45%" title="VWCE 45%"></div>
+                        <div class="bar-seg seg-aggh" style="width:45%" title="AGGH 45%"></div>
+                        <div class="bar-seg seg-sgln" style="width:10%" title="SGLN 10%"></div>
+                    </div>
+                    <div class="allocation-legend">
+                        <span class="leg-item"><span class="leg-dot dot-vwce"></span>Azionario 45%</span>
+                        <span class="leg-item"><span class="leg-dot dot-aggh"></span>Obbligazionario 45%</span>
+                        <span class="leg-item"><span class="leg-dot dot-sgln"></span>Oro 10%</span>
+                    </div>
+
+                    <div class="etf-table">
+                        <div class="etf-row">
+                            <div class="etf-info">
+                                <span class="etf-name">Vanguard FTSE All-World UCITS ETF Acc</span>
+                                <span class="etf-ticker">VWCE</span>
+                            </div>
+                            <div class="etf-pct pct-violet">45%</div>
+                        </div>
+                        <div class="etf-row">
+                            <div class="etf-info">
+                                <span class="etf-name">iShares Core Global Aggregate Bond EUR Hedged Acc</span>
+                                <span class="etf-ticker">AGGH</span>
+                            </div>
+                            <div class="etf-pct pct-green">45%</div>
+                        </div>
+                        <div class="etf-row">
+                            <div class="etf-info">
+                                <span class="etf-name">iShares Physical Gold ETC</span>
+                                <span class="etf-ticker">SGLN</span>
+                            </div>
+                            <div class="etf-pct pct-gold">10%</div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-return">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        Rendimento storico stimato: <strong>~5–6% annuo nominale</strong>
+                    </div>
+                </div>
+
+                <!-- === DINAMICO === -->
+                <div class="portfolio-card card-dinamico reveal" id="portafoglio-dinamico">
+                    <div class="portfolio-header">
+                        <div class="portfolio-badge badge-red">🔴 Dinamico</div>
+                        <div class="portfolio-horizon">
+                            <i class="fa-regular fa-clock"></i> Orizzonte &gt; 15 anni
+                        </div>
+                    </div>
+                    <p class="portfolio-desc">Esempio per chi ha un orizzonte lungo e può sopportare oscillazioni anche
+                        significative, puntando alla massima crescita del capitale nel tempo.</p>
+
+                    <div class="allocation-bar" role="img" aria-label="Allocazione: VWCE 80%, AGGH 10%, SGLN 10%">
+                        <div class="bar-seg seg-vwce" style="width:80%" title="VWCE 80%"></div>
+                        <div class="bar-seg seg-aggh" style="width:10%" title="AGGH 10%"></div>
+                        <div class="bar-seg seg-sgln" style="width:10%" title="SGLN 10%"></div>
+                    </div>
+                    <div class="allocation-legend">
+                        <span class="leg-item"><span class="leg-dot dot-vwce"></span>Azionario 80%</span>
+                        <span class="leg-item"><span class="leg-dot dot-aggh"></span>Obbligazionario 10%</span>
+                        <span class="leg-item"><span class="leg-dot dot-sgln"></span>Oro 10%</span>
+                    </div>
+
+                    <div class="etf-table">
+                        <div class="etf-row">
+                            <div class="etf-info">
+                                <span class="etf-name">Vanguard FTSE All-World UCITS ETF Acc</span>
+                                <span class="etf-ticker">VWCE</span>
+                            </div>
+                            <div class="etf-pct pct-violet">80%</div>
+                        </div>
+                        <div class="etf-row">
+                            <div class="etf-info">
+                                <span class="etf-name">iShares Core Global Aggregate Bond EUR Hedged Acc</span>
+                                <span class="etf-ticker">AGGH</span>
+                            </div>
+                            <div class="etf-pct pct-green">10%</div>
+                        </div>
+                        <div class="etf-row">
+                            <div class="etf-info">
+                                <span class="etf-name">iShares Physical Gold ETC</span>
+                                <span class="etf-ticker">SGLN</span>
+                            </div>
+                            <div class="etf-pct pct-gold">10%</div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-return">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        Rendimento storico stimato: <strong>~7–8% annuo nominale</strong>
+                    </div>
+                </div>
+
+            </div><!-- /portfolio-grid -->
+
+            <!-- GLIDE PATH CARD -->
+            <div class="glide-path-card reveal" id="glide-path">
+                <div class="glide-icon"><i class="fa-solid fa-route"></i></div>
+                <div class="glide-content">
+                    <h3>Il tuo profilo cambia nel tempo</h3>
+                    <p>Chi inizia oggi con un orizzonte superiore ai 15 anni (Dinamico) vedrà quell'orizzonte
+                        accorciarsi nel tempo. È buona norma pianificare una <strong>transizione graduale</strong> verso
+                        il profilo successivo con anticipo:</p>
+                    <div class="glide-flow">
+                        <div class="glide-step">
+                            <span class="gs-badge red">🔴 Dinamico</span>
+                            <span class="gs-desc">Orizzonte &gt;15 anni</span>
+                        </div>
+                        <div class="glide-arrow"><i class="fa-solid fa-arrow-right"></i><span>~5–7 anni prima</span>
+                        </div>
+                        <div class="glide-step">
+                            <span class="gs-badge yellow">🟡 Bilanciato</span>
+                            <span class="gs-desc">Orizzonte 5–15 anni</span>
+                        </div>
+                        <div class="glide-arrow"><i class="fa-solid fa-arrow-right"></i><span>~2–3 anni prima</span>
+                        </div>
+                        <div class="glide-step">
+                            <span class="gs-badge blue">🔵 Prudente</span>
+                            <span class="gs-desc">Orizzonte &lt;5 anni</span>
+                        </div>
+                    </div>
+                    <p class="glide-tip"><i class="fa-solid fa-lightbulb"></i> <strong>Come fare la
+                            transizione:</strong> redireziona progressivamente i nuovi versamenti mensili del PAC verso
+                        i nuovi ETF. In questo modo non vendi nulla (niente tasse da pagare) e il ribilanciamento
+                        avviene naturalmente nel tempo.</p>
+                </div>
+            </div>
+
+            <p class="return-disclaimer">
+                * I rendimenti storici indicati sono stime basate su dati di lungo periodo (fonti: MSCI, Vanguard,
+                Credit Suisse Global Investment Returns Yearbook). Non costituiscono previsione né garanzia di
+                rendimenti futuri. I rendimenti passati non sono indicativi di quelli futuri. Le stime non tengono conto
+                dell'impatto fiscale (26% su plusvalenze in Italia).
+            </p>
+        </div>
+    </section>
+
+
+
+    <!-- ===========================
+         FOOTER
+    =========================== -->
+    <footer class="footer" aria-label="Footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="../logo/logo_con_scritta_render.png" alt="Finpol" height="164">
+                    <p>Educazione finanziaria indipendente.<br>Nessun conflitto di interesse.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#portafogli">Portafogli</a>
+                    <a href="../quiz/index.html">Quiz</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/finpol.it" target="_blank" rel="noopener"
+                        aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@finpol_it" target="_blank" rel="noopener" aria-label="YouTube"><i
+                            class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@finpol.it" target="_blank" rel="noopener" aria-label="TikTok"><i
+                            class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-disclaimer">
+                <p><strong>Disclaimer:</strong> I contenuti di questo sito sono a scopo puramente educativo e
+                    informativo. Finpol non è un intermediario finanziario autorizzato e non fornisce consulenza
+                    finanziaria personalizzata ai sensi del D.Lgs. 58/1998 (TUF) e della Direttiva MiFID II. I
+                    portafogli mostrati sono esempi didattici e non costituiscono raccomandazioni di investimento. I
+                    rendimenti storici non garantiscono rendimenti futuri. Ogni investimento comporta rischi, inclusa la
+                    possibile perdita parziale o totale del capitale investito. Prima di operare nei mercati finanziari,
+                    valuta attentamente i tuoi obiettivi, la tua tolleranza al rischio e la tua situazione finanziaria
+                    complessiva, eventualmente con il supporto di un Consulente Finanziario Autonomo iscritto all'albo
+                    OCF (<a href="https://www.organismocf.it" target="_blank" rel="noopener">organismocf.it</a>).</p>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Finpol · Tutti i diritti riservati</p>
+                <a href="https://finpol.substack.com/about" target="_blank" rel="noopener">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
