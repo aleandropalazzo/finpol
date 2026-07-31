@@ -339,7 +339,7 @@ function showResult(forcedProfile = null) {
                     </ul>
                 </div>
 
-                <a href="../sito/index.html#portafogli" class="btn btn-primary">
+                <a href="../index.html#portafogli" class="btn btn-primary">
                     Scopri i portafogli d'esempio <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
@@ -366,7 +366,7 @@ function showResult(forcedProfile = null) {
                     </ul>
                 </div>
 
-                <a href="../sito/index.html#portafogli" class="btn btn-primary">
+                <a href="../index.html#portafogli" class="btn btn-primary">
                     Scopri i portafogli d'esempio <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
@@ -393,7 +393,7 @@ function showResult(forcedProfile = null) {
                     </ul>
                 </div>
 
-                <a href="../sito/index.html#portafogli" class="btn btn-primary">
+                <a href="../index.html#portafogli" class="btn btn-primary">
                     Scopri i portafogli d'esempio <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
@@ -420,7 +420,7 @@ function showResult(forcedProfile = null) {
                     </ul>
                 </div>
 
-                <a href="../sito/index.html#portafogli" class="btn btn-primary">
+                <a href="../index.html#portafogli" class="btn btn-primary">
                     Scopri il portafoglio adatto a te <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
@@ -446,7 +446,7 @@ function showResult(forcedProfile = null) {
                     </ul>
                 </div>
 
-                <a href="../sito/index.html#portafogli" class="btn btn-primary">
+                <a href="../index.html#portafogli" class="btn btn-primary">
                     Scopri il portafoglio adatto a te <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
@@ -472,7 +472,7 @@ function showResult(forcedProfile = null) {
                     </ul>
                 </div>
 
-                <a href="../sito/index.html#portafogli" class="btn btn-primary">
+                <a href="../index.html#portafogli" class="btn btn-primary">
                     Scopri il portafoglio adatto a te <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
