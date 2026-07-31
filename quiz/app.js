@@ -47,8 +47,8 @@ const questions = [
         id: "rischio",
         text: "Investi 50.000 euro. Tra queste 3 opzioni, quale sceglieresti?",
         options: [
-            { value: "alto", text: "Dopo 10 anni probabilmente avrai 100.000 euro, ma c'è la possibilità che il tuo portafoglio scenda a 25.000 euro" },
-            { value: "medio", text: "Dopo 10 anni probabilmente avrai 75.000 euro, ma c'è la possibilità che il tuo portafoglio scenda a 40.000 euro" },
+            { value: "alto", text: "Dopo 10 anni avrai 100.000 euro, ma durante il periodo il tuo portafoglio potrebbe scendere a 25.000 euro" },
+            { value: "medio", text: "Dopo 10 anni avrai 75.000 euro, ma durante il periodo il tuo portafoglio potrebbe scendere a 40.000 euro" },
             { value: "basso", text: "Dopo 10 anni avrai 60.000 euro con certezza." }
         ]
     }
@@ -499,13 +499,13 @@ document.addEventListener("DOMContentLoaded", () => {
             card.classList.remove('active');
         });
         document.getElementById('progressContainer').style.display = 'none';
-        
+
         // Show result screen
         const resultScreen = document.getElementById("resultScreen");
         resultScreen.style.display = 'flex';
         resultScreen.style.opacity = '1';
         resultScreen.classList.add('active');
-        
+
         // Render the result HTML directly
         showResult(forcedResult);
     }

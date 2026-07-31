@@ -407,22 +407,6 @@ body {
     flex-shrink: 0;
 }
 
-.privacy-consent label {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    line-height: 1.4;
-    cursor: pointer;
-}
-
-    z-index: 10;
-}
-
-.app-footer p {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.25);
-    letter-spacing: 0.02em;
-}
-
 /* Responsive Scaling for smaller phones */
 @media (max-width: 380px) {
     body {
@@ -608,7 +592,10 @@ body {
     line-height: 1.4;
     cursor: pointer;
 }
-
+.app-footer {
+    text-align: center;
+    margin-top: 2rem;
+    position: relative;
     z-index: 10;
 }
 
