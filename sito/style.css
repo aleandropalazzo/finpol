@@ -962,7 +962,7 @@ ul {
     background: linear-gradient(90deg, var(--accent-violet), #a78bfa);
 }
 
-.seg-aggh {
+.seg-aggh, .seg-ibci {
     background: linear-gradient(90deg, var(--accent-green), #34d399);
 }
 
@@ -1000,7 +1000,7 @@ ul {
     background: var(--accent-violet);
 }
 
-.dot-aggh {
+.dot-aggh, .dot-ibci {
     background: var(--accent-green);
 }
 
