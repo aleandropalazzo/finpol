@@ -157,4 +157,297 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+
+    /* -----------------------------------------------
+       8. PAC SIMULATOR
+    ----------------------------------------------- */
+    const pacProfile    = document.getElementById('pac-profile');
+    const pacCustomGrp  = document.getElementById('pac-custom-group');
+    const pacYearsSlider = document.getElementById('pac-years');
+    const pacYearsDisp  = document.getElementById('pac-years-display');
+    const pacCalcBtn    = document.getElementById('pac-calculate');
+    const pacResults    = document.getElementById('pac-results');
+    const pacTableToggle = document.getElementById('pac-table-toggle');
+    const pacTableWrap  = document.getElementById('pac-table-wrap');
+
+    // Show/hide custom rate field
+    pacProfile?.addEventListener('change', () => {
+        pacCustomGrp.style.display = pacProfile.value === 'custom' ? 'flex' : 'none';
+    });
+
+    // Slider label
+    pacYearsSlider?.addEventListener('input', () => {
+        const y = pacYearsSlider.value;
+        pacYearsDisp.textContent = y + (y === '1' ? ' anno' : ' anni');
+    });
+
+    // Table toggle
+    pacTableToggle?.addEventListener('click', () => {
+        const isOpen = pacTableWrap.style.display !== 'none';
+        pacTableWrap.style.display = isOpen ? 'none' : 'block';
+        pacTableToggle.classList.toggle('open', !isOpen);
+    });
+
+    // Portfolio card buttons → pre-select profile
+    document.querySelectorAll('.btn-pac-sim').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const profileVal = btn.dataset.profile;
+            if (pacProfile) {
+                pacProfile.value = profileVal;
+                pacCustomGrp.style.display = 'none';
+            }
+            // Auto-calculate with the selected profile
+            if (pacCalcBtn) {
+                pacCalcBtn._autoFired = true;
+                pacCalcBtn.click();
+            }
+            // Scroll to simulator
+            const simSection = document.getElementById('simulatore');
+            if (simSection) {
+                const navHeight = navbar ? navbar.offsetHeight : 68;
+                const top = simSection.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Calculate
+    pacCalcBtn?.addEventListener('click', () => {
+        const initial  = parseFloat(document.getElementById('pac-initial').value) || 0;
+        const monthly  = parseFloat(document.getElementById('pac-monthly').value) || 0;
+        const years    = parseInt(pacYearsSlider.value, 10) || 20;
+        let annualRate = 5.5;
+
+        if (pacProfile.value === 'custom') {
+            annualRate = parseFloat(document.getElementById('pac-custom-rate').value) || 0;
+        } else {
+            annualRate = parseFloat(pacProfile.value) || 0;
+        }
+
+        const monthlyRate = annualRate / 100 / 12;
+        const totalMonths = years * 12;
+
+        // Build month-by-month data
+        const dataPoints = [];
+        let balance = initial;
+        let totalInvested = initial;
+
+        dataPoints.push({ month: 0, invested: initial, value: initial });
+
+        for (let m = 1; m <= totalMonths; m++) {
+            balance = balance * (1 + monthlyRate) + monthly;
+            totalInvested += monthly;
+            dataPoints.push({ month: m, invested: totalInvested, value: balance });
+        }
+
+        const finalValue = balance;
+        const netGain = finalValue - totalInvested;
+        const gainPct = totalInvested > 0 ? (netGain / totalInvested * 100) : 0;
+
+        // Show results
+        pacResults.style.display = 'flex';
+
+        // Animate counters
+        animateValue('pac-total-invested', totalInvested);
+        animateValue('pac-final-value', finalValue);
+        animateValue('pac-net-gain', netGain);
+        document.getElementById('pac-gain-pct').textContent = '+' + gainPct.toFixed(1) + '%';
+
+        // Draw chart
+        drawPacChart(dataPoints, years);
+
+        // Build table
+        buildPacTable(dataPoints, years);
+
+        // Scroll to results on mobile (only if user clicked, not on auto-load)
+        if (window.innerWidth < 900 && !pacCalcBtn._autoFired) {
+            setTimeout(() => {
+                const navHeight = navbar ? navbar.offsetHeight : 68;
+                const top = pacResults.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }, 100);
+        }
+        pacCalcBtn._autoFired = false;
+    });
+
+    // Auto-calculate on page load with default values
+    if (pacCalcBtn) {
+        pacCalcBtn._autoFired = true;
+        pacCalcBtn.click();
+    }
+
+    function animateValue(elementId, target) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        const duration = 1200;
+        const start = performance.now();
+        const format = (n) => '€ ' + Math.floor(n).toLocaleString('it-IT');
+
+        function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = format(target * eased);
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
+
+    function drawPacChart(data, years) {
+        const canvas = document.getElementById('pac-chart');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+
+        // Reset canvas size before measuring to prevent grow-on-recalculate bug
+        canvas.style.width = '100%';
+        canvas.style.height = 'auto';
+        canvas.width = 0;
+        canvas.height = 0;
+
+        // Responsive sizing
+        const containerW = canvas.parentElement.clientWidth - 32; // minus padding
+        const w = Math.max(containerW, 300);
+        const h = Math.round(w * 0.48);
+
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.scale(dpr, dpr);
+
+        // Chart area
+        const pad = { top: 20, right: 20, bottom: 40, left: 70 };
+        const cw = w - pad.left - pad.right;
+        const ch = h - pad.top - pad.bottom;
+
+        ctx.clearRect(0, 0, w, h);
+
+        const maxVal = Math.max(...data.map(d => d.value), ...data.map(d => d.invested));
+        const step = data.length > 200 ? Math.ceil(data.length / 200) : 1;
+
+        // Helper
+        const x = (i) => pad.left + (i / (data.length - 1)) * cw;
+        const y = (v) => pad.top + ch - (v / maxVal) * ch;
+
+        // Grid lines
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+        ctx.lineWidth = 1;
+        const gridLines = 5;
+        for (let g = 0; g <= gridLines; g++) {
+            const gy = pad.top + (ch / gridLines) * g;
+            ctx.beginPath();
+            ctx.moveTo(pad.left, gy);
+            ctx.lineTo(pad.left + cw, gy);
+            ctx.stroke();
+
+            // Y-axis labels
+            const val = maxVal - (maxVal / gridLines) * g;
+            ctx.fillStyle = 'rgba(255,255,255,0.35)';
+            ctx.font = '11px Plus Jakarta Sans, sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText('€ ' + formatCompact(val), pad.left - 10, gy + 4);
+        }
+
+        // X-axis labels
+        ctx.fillStyle = 'rgba(255,255,255,0.35)';
+        ctx.font = '11px Plus Jakarta Sans, sans-serif';
+        ctx.textAlign = 'center';
+        const labelInterval = years <= 10 ? 1 : years <= 20 ? 2 : 5;
+        for (let yr = 0; yr <= years; yr += labelInterval) {
+            const idx = yr * 12;
+            if (idx < data.length) {
+                ctx.fillText(yr + 'a', x(idx), h - pad.bottom + 20);
+            }
+        }
+        // Always show last year
+        ctx.fillText(years + 'a', x(data.length - 1), h - pad.bottom + 20);
+
+        // --- Area: Portfolio value ---
+        ctx.beginPath();
+        ctx.moveTo(x(0), y(data[0].value));
+        for (let i = 1; i < data.length; i += step) {
+            ctx.lineTo(x(i), y(data[i].value));
+        }
+        ctx.lineTo(x(data.length - 1), y(data[data.length - 1].value));
+        ctx.lineTo(x(data.length - 1), y(0));
+        ctx.lineTo(x(0), y(0));
+        ctx.closePath();
+        const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+        grad.addColorStop(0, 'rgba(124, 58, 237, 0.3)');
+        grad.addColorStop(1, 'rgba(124, 58, 237, 0.02)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Line: Portfolio value
+        ctx.beginPath();
+        ctx.moveTo(x(0), y(data[0].value));
+        for (let i = 1; i < data.length; i += step) {
+            ctx.lineTo(x(i), y(data[i].value));
+        }
+        ctx.lineTo(x(data.length - 1), y(data[data.length - 1].value));
+        ctx.strokeStyle = '#7c3aed';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // --- Area: Invested ---
+        ctx.beginPath();
+        ctx.moveTo(x(0), y(data[0].invested));
+        for (let i = 1; i < data.length; i += step) {
+            ctx.lineTo(x(i), y(data[i].invested));
+        }
+        ctx.lineTo(x(data.length - 1), y(data[data.length - 1].invested));
+        ctx.lineTo(x(data.length - 1), y(0));
+        ctx.lineTo(x(0), y(0));
+        ctx.closePath();
+        const grad2 = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+        grad2.addColorStop(0, 'rgba(59, 130, 246, 0.25)');
+        grad2.addColorStop(1, 'rgba(59, 130, 246, 0.02)');
+        ctx.fillStyle = grad2;
+        ctx.fill();
+
+        // Line: Invested
+        ctx.beginPath();
+        ctx.moveTo(x(0), y(data[0].invested));
+        for (let i = 1; i < data.length; i += step) {
+            ctx.lineTo(x(i), y(data[i].invested));
+        }
+        ctx.lineTo(x(data.length - 1), y(data[data.length - 1].invested));
+        ctx.strokeStyle = '#3b82f6';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+    }
+
+    function formatCompact(n) {
+        if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+        if (n >= 1000) return (n / 1000).toFixed(0) + 'k';
+        return Math.round(n).toString();
+    }
+
+    function buildPacTable(data, years) {
+        const tbody = document.getElementById('pac-table-body');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        const fmt = (n) => '€ ' + Math.floor(n).toLocaleString('it-IT');
+
+        for (let yr = 1; yr <= years; yr++) {
+            const idx = yr * 12;
+            if (idx >= data.length) break;
+            const d = data[idx];
+            const interest = d.value - d.invested;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${yr}</td>
+                <td>${fmt(d.invested)}</td>
+                <td class="td-gain">+${fmt(interest)}</td>
+                <td><strong>${fmt(d.value)}</strong></td>
+            `;
+            tbody.appendChild(row);
+        }
+    }
+
 });

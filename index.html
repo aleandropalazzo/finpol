@@ -42,6 +42,8 @@
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="#portafogli" class="nav-link">Portafogli</a>
+                <a href="#simulatore" class="nav-link">Simulatore</a>
+                <a href="#chi-sono" class="nav-link">Chi Sono</a>
             </div>
             <div class="nav-actions">
                 <a href="quiz/index.html" class="btn-nav" id="nav-cta">Scopri il tuo profilo <i
@@ -65,24 +67,24 @@
                     Impara a <span class="gradient-text">investire da solo</span>.
                 </h1>
                 <p class="hero-sub reveal">
-                    Portafogli di esempio, video educativi e strumenti pratici per chi ha dei risparmi e vuole capire
+                    Portafogli di esempio, simulatore PAC e strumenti pratici per chi ha dei risparmi e vuole capire
                     come farli crescere.
                 </p>
                 <div class="hero-ctas reveal">
                     <a href="quiz/index.html" class="btn-primary btn-large" id="hero-quiz-cta">
-                        <i class="fa-solid fa-chart-simple"></i> Scopri il tuo profilo
+                        <i class="fa-solid fa-chart-simple"></i> Scopri il tuo profilo <i
+                            class="fa-solid fa-arrow-right icon-right"></i>
                     </a>
-                    <a href="#portafogli" class="btn-ghost" id="hero-portfolios-link">
+                    <a href="#portafogli" class="btn-ghost btn-large" id="hero-portfolios-link">
                         Vedi i portafogli <i class="fa-solid fa-chevron-down"></i>
                     </a>
                 </div>
-                <p class="hero-trust reveal">
-                    <i class="fa-solid fa-shield-halved"></i> Contenuto educativo &nbsp;·&nbsp;
-                    <i class="fa-solid fa-circle-check"></i> Nessun conflitto di interesse &nbsp;·&nbsp;
-                    <i class="fa-solid fa-lock-open"></i> Accesso gratuito
-                </p>
+                <a href="#chi-sono" class="hero-author-tag reveal">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>Creato da <strong>Aleandro Palazzo</strong> — Dottorando in Economia</span>
+                    <i class="fa-solid fa-arrow-right-long tag-arrow"></i>
+                </a>
             </div>
-
         </div>
     </section>
 
@@ -202,6 +204,9 @@
                     </div>
                     <p class="portfolio-warning">⚠️ Se l'orizzonte è inferiore a 3 anni, valuta un conto deposito
                         vincolato anziché un portafoglio ETF.</p>
+                    <a href="#simulatore" class="btn-pac-sim" data-profile="3">
+                        <i class="fa-solid fa-calculator"></i> Vai al simulatore
+                    </a>
                 </div>
 
                 <!-- === BILANCIATO === -->
@@ -254,6 +259,9 @@
                         <i class="fa-solid fa-clock-rotate-left"></i>
                         Rendimento storico stimato: <strong>~5–6% annuo nominale</strong>
                     </div>
+                    <a href="#simulatore" class="btn-pac-sim" data-profile="5.5">
+                        <i class="fa-solid fa-calculator"></i> Vai al simulatore
+                    </a>
                 </div>
 
                 <!-- === DINAMICO === -->
@@ -306,6 +314,9 @@
                         <i class="fa-solid fa-clock-rotate-left"></i>
                         Rendimento storico stimato: <strong>~7–8% annuo nominale</strong>
                     </div>
+                    <a href="#simulatore" class="btn-pac-sim" data-profile="7.5">
+                        <i class="fa-solid fa-calculator"></i> Vai al simulatore
+                    </a>
                 </div>
 
             </div><!-- /portfolio-grid -->
@@ -323,13 +334,13 @@
                             <span class="gs-badge red">🔴 Dinamico</span>
                             <span class="gs-desc">Orizzonte &gt;15 anni</span>
                         </div>
-                        <div class="glide-arrow"><i class="fa-solid fa-arrow-right"></i><span>~5–7 anni prima</span>
+                        <div class="glide-arrow"><i class="fa-solid fa-arrow-right"></i><span>~5–7 anni dal tuo obiettivo</span>
                         </div>
                         <div class="glide-step">
                             <span class="gs-badge yellow">🟡 Bilanciato</span>
                             <span class="gs-desc">Orizzonte 5–15 anni</span>
                         </div>
-                        <div class="glide-arrow"><i class="fa-solid fa-arrow-right"></i><span>~2–3 anni prima</span>
+                        <div class="glide-arrow"><i class="fa-solid fa-arrow-right"></i><span>~2–3 anni dal tuo obiettivo</span>
                         </div>
                         <div class="glide-step">
                             <span class="gs-badge blue">🔵 Prudente</span>
@@ -355,6 +366,165 @@
 
 
     <!-- ===========================
+         SIMULATORE PAC
+    =========================== -->
+    <section class="pac-section" id="simulatore" aria-label="Simulatore PAC">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Simulatore PAC</h2>
+                <p>Simula la crescita del tuo capitale nel tempo con versamenti ricorrenti e interesse composto.</p>
+            </div>
+
+            <div class="pac-layout reveal">
+                <!-- DISCLAIMER -->
+                <div class="pac-disclaimer">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <p>Questa simulazione è a scopo puramente educativo e illustrativo. I rendimenti indicati sono
+                        ipotesi basate su medie storiche e <strong>non garantiscono risultati futuri</strong>. Non tiene
+                        conto di inflazione, tassazione (26% su plusvalenze in Italia), né costi di transazione. Per
+                        decisioni di investimento personalizzate, rivolgiti a un
+                        <a href="https://www.organismocf.it" target="_blank" rel="noopener">Consulente Finanziario
+                            Autonomo
+                            iscritto all'OCF</a>.
+                    </p>
+                </div>
+
+                <!-- INPUT FORM -->
+                <div class="pac-form-card">
+                    <div class="pac-input-group">
+                        <label for="pac-initial">Investimento iniziale</label>
+                        <div class="pac-input-wrap">
+                            <span class="pac-input-prefix">€</span>
+                            <input type="number" id="pac-initial" value="1000" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="pac-input-group">
+                        <label for="pac-monthly">Versamento mensile</label>
+                        <div class="pac-input-wrap">
+                            <span class="pac-input-prefix">€</span>
+                            <input type="number" id="pac-monthly" value="200" min="0" step="50">
+                        </div>
+                    </div>
+
+                    <div class="pac-input-group">
+                        <label for="pac-profile">Profilo di rendimento</label>
+                        <select id="pac-profile">
+                            <option value="3">🔵 Prudente (~3% annuo)</option>
+                            <option value="5.5" selected>🟡 Bilanciato (~5,5% annuo)</option>
+                            <option value="7.5">🔴 Dinamico (~7,5% annuo)</option>
+                            <option value="custom">⚙️ Personalizzato</option>
+                        </select>
+                    </div>
+
+                    <div class="pac-input-group pac-custom-rate" id="pac-custom-group" style="display:none;">
+                        <label for="pac-custom-rate">Rendimento annuo</label>
+                        <div class="pac-input-wrap">
+                            <input type="number" id="pac-custom-rate" value="6" min="0" max="30" step="0.5">
+                            <span class="pac-input-suffix">%</span>
+                        </div>
+                    </div>
+
+                    <div class="pac-input-group">
+                        <label for="pac-years">Orizzonte: <span id="pac-years-display" class="pac-years-val">20
+                                anni</span></label>
+                        <input type="range" id="pac-years" min="1" max="40" value="20" class="pac-slider">
+                        <div class="pac-slider-labels">
+                            <span>1 anno</span>
+                            <span>40 anni</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary btn-large pac-calc-btn" id="pac-calculate">
+                        <i class="fa-solid fa-calculator"></i> Calcola
+                    </button>
+                </div>
+
+                <div class="pac-results" id="pac-results">
+                    <div class="pac-summary-grid">
+                        <div class="pac-stat-card">
+                            <div class="pac-stat-label"><i class="fa-solid fa-wallet"></i> Totale versato</div>
+                            <div class="pac-stat-value" id="pac-total-invested">€ 0</div>
+                        </div>
+                        <div class="pac-stat-card pac-stat-highlight">
+                            <div class="pac-stat-label"><i class="fa-solid fa-chart-line"></i> Valore finale</div>
+                            <div class="pac-stat-value" id="pac-final-value">€ 0</div>
+                        </div>
+                        <div class="pac-stat-card">
+                            <div class="pac-stat-label"><i class="fa-solid fa-coins"></i> Guadagno netto</div>
+                            <div class="pac-stat-value pac-gain" id="pac-net-gain">€ 0</div>
+                            <div class="pac-stat-pct" id="pac-gain-pct">+0%</div>
+                        </div>
+                    </div>
+
+                    <!-- CHART -->
+                    <div class="pac-chart-wrap">
+                        <canvas id="pac-chart" width="800" height="380"></canvas>
+                        <div class="pac-chart-legend">
+                            <span class="pac-legend-item"><span
+                                    class="pac-legend-dot pac-legend-invested"></span>Capitale versato</span>
+                            <span class="pac-legend-item"><span class="pac-legend-dot pac-legend-value"></span>Valore
+                                del portafoglio</span>
+                        </div>
+                    </div>
+
+                    <!-- YEARLY TABLE (collapsible) -->
+                    <button class="pac-table-toggle" id="pac-table-toggle">
+                        <i class="fa-solid fa-table"></i> Mostra tabella anno per anno
+                        <i class="fa-solid fa-chevron-down pac-toggle-chevron"></i>
+                    </button>
+                    <div class="pac-table-wrap" id="pac-table-wrap" style="display:none;">
+                        <table class="pac-table" id="pac-table">
+                            <thead>
+                                <tr>
+                                    <th>Anno</th>
+                                    <th>Versato</th>
+                                    <th>Interessi</th>
+                                    <th>Valore</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pac-table-body"></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===========================
+         CHI SONO
+    =========================== -->
+    <section class="about-section" id="chi-sono" aria-label="Chi sono">
+        <div class="container">
+            <div class="about-card reveal">
+                <div class="about-avatar">
+                    <img src="logo/foto_profilo.jpg" alt="Aleandro Palazzo" class="avatar-img">
+                </div>
+                <div class="about-content">
+                    <div class="about-badge">Chi c'è dietro Finpol</div>
+                    <h2>Aleandro Palazzo</h2>
+                    <p class="about-title-sub">Dottorando in Economia &amp; Divulgatore Finanziario </p>
+                    <p class="about-bio">
+                        Ho una laurea magistrale in economia conseguita presso l'Università degli Studi di Torino e ora
+                        sono al terzo anno di dottorato in economia all'Università di Bologna. Puoi trovare maggiori
+                        informazioni sul <a href="https://aleandropalazzo.github.io/" target="_blank" rel="noopener">mio
+                            sito accademico</a>.
+                        Ho creato <strong>Finpol</strong> per rendere l'educazione finanziaria accessibile, chiara e
+                        priva di conflitti d'interesse. Credo fermamente che chiunque, con i giusti strumenti didattici
+                        e
+                        dati trasparenti, possa imparare a gestire e far crescere i propri risparmi in totale autonomia.
+                        Spero che possa esserti utile.
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===========================
          FOOTER
     =========================== -->
     <footer class="footer" aria-label="Footer">
@@ -366,6 +536,8 @@
                 </div>
                 <div class="footer-links">
                     <a href="#portafogli">Portafogli</a>
+                    <a href="#simulatore">Simulatore</a>
+                    <a href="#chi-sono">Chi sono</a>
                     <a href="quiz/index.html">Quiz</a>
                 </div>
                 <div class="footer-social">
