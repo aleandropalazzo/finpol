@@ -1019,17 +1019,80 @@ ul {
     padding: 0.85rem;
 }
 
+.etf-row-wrapper {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.etf-row-wrapper:last-child {
+    border-bottom: none;
+}
+
 .etf-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 0.55rem 0.4rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--ease);
 }
 
-.etf-row:last-child {
-    border-bottom: none;
+.etf-row:hover {
+    background: rgba(124, 58, 237, 0.08);
+}
+
+.etf-info-icon {
+    font-size: 0.72rem;
+    color: #a78bfa;
+    margin-left: 0.3rem;
+    opacity: 0.7;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.etf-row:hover .etf-info-icon,
+.etf-alt-note:hover .etf-info-icon {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.etf-desc-drawer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.35s ease, padding 0.35s ease;
+    opacity: 0;
+    background: rgba(124, 58, 237, 0.08);
+    border-left: 3px solid #a78bfa;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 0.15rem 0 0.5rem 0;
+    padding: 0 0.75rem;
+}
+
+.etf-row-wrapper.active .etf-desc-drawer,
+.etf-alt-note.active .etf-desc-drawer {
+    max-height: 200px;
+    opacity: 1;
+    padding: 0.65rem 0.75rem;
+}
+
+@media (hover: hover) {
+    .etf-row-wrapper:hover .etf-desc-drawer,
+    .etf-alt-note:hover .etf-desc-drawer {
+        max-height: 200px;
+        opacity: 1;
+        padding: 0.65rem 0.75rem;
+    }
+}
+
+.etf-desc-drawer p {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.etf-desc-drawer p strong {
+    color: var(--text-primary);
 }
 
 .etf-info {
@@ -1080,14 +1143,22 @@ ul {
     color: var(--text-muted);
     background: rgba(56, 189, 248, 0.05);
     border-left: 2px solid var(--accent-sky);
-    padding: 0.4rem 0.6rem;
+    padding: 0.45rem 0.6rem;
     border-radius: 4px;
     line-height: 1.5;
+    cursor: pointer;
+    transition: var(--ease);
+    margin: 0.25rem 0;
 }
 
-.etf-alt-note i {
-    color: var(--accent-sky);
-    margin-right: 0.3rem;
+.etf-alt-header {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.etf-alt-note:hover {
+    background: rgba(56, 189, 248, 0.1);
 }
 
 .portfolio-return {

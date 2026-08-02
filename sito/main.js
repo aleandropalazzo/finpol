@@ -159,6 +159,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* -----------------------------------------------
+       7b. ETF ROW DESCRIPTION TOGGLE (MOBILE / CLICK)
+    ----------------------------------------------- */
+    document.querySelectorAll('.etf-row-wrapper, .etf-alt-note').forEach(item => {
+        item.addEventListener('click', (e) => {
+            const isActive = item.classList.contains('active');
+            const parentTable = item.closest('.etf-table');
+            if (parentTable) {
+                parentTable.querySelectorAll('.etf-row-wrapper, .etf-alt-note').forEach(other => {
+                    if (other !== item) other.classList.remove('active');
+                });
+            }
+            item.classList.toggle('active', !isActive);
+        });
+    });
+
+
+    /* -----------------------------------------------
        8. PAC SIMULATOR
     ----------------------------------------------- */
     const pacProfile    = document.getElementById('pac-profile');
