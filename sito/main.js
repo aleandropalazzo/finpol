@@ -467,4 +467,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
+    /* -----------------------------------------------
+       10. FINPOL PLUS — WAITING LIST FORM
+    ----------------------------------------------- */
+    const plusForm = document.getElementById('plus-form');
+    const plusEmail = document.getElementById('plus-email');
+    const plusNote = document.getElementById('plus-note');
+    const plusBtn = document.getElementById('plus-submit');
+
+    plusForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = plusEmail.value.trim();
+        if (!email) return;
+
+        // Disable button during submission
+        plusBtn.disabled = true;
+        plusBtn.querySelector('span').textContent = 'Invio...';
+
+        // Submit to Formspree
+        fetch('https://formspree.io/f/xgoqzgrv', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json' 
+            },
+            body: JSON.stringify({ 
+                email: email, 
+                source: 'Finpol Plus Waiting List',
+                url: window.location.href 
+            })
+        })
+        .then(res => {
+            plusNote.textContent = '✅ Perfetto! Ti avviseremo al lancio di Finpol Plus.';
+            plusNote.style.color = '#34d399';
+            plusEmail.value = '';
+            plusEmail.disabled = true;
+            plusBtn.querySelector('span').textContent = 'Iscritto ✓';
+            plusBtn.style.background = 'rgba(52, 211, 153, 0.2)';
+            plusBtn.style.borderColor = '#34d399';
+        })
+        .catch(err => {
+            plusNote.textContent = '⚠️ Errore nell\'invio. Riprova tra qualche secondo.';
+            plusNote.style.color = '#fbbf24';
+            plusBtn.disabled = false;
+            plusBtn.querySelector('span').textContent = 'Avvisami';
+        });
+    });
+
 });
