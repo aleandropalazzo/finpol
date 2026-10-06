@@ -32,25 +32,6 @@ const questions = [
             { value: "no", text: "No, ogni mese copro le spese a malapena." },
             { value: "si", text: "Si, ogni mese riesco a risparmiare più di 200 euro." }
         ]
-    },
-    {
-        id: "orizzonte",
-        text: "Hai in programma di fare delle spese importanti nei prossimi anni (es. acquistare un'auto, una casa, aprire un'attività, ecc.)?",
-        options: [
-            { value: "breve", text: "Si, a breve (entro 5 anni)" },
-            { value: "medio", text: "Si, a medio termine (5-10 anni)" },
-            { value: "incerto", text: "Forse, non ne sono sicuro/a." },
-            { value: "lungo", text: "No, nessuna spesa importante in programma nei prossimi 10 anni" }
-        ]
-    },
-    {
-        id: "rischio",
-        text: "Investi 50.000 euro. Tra queste 3 opzioni, quale sceglieresti?",
-        options: [
-            { value: "alto", text: "Dopo 10 anni avrai 100.000 euro, ma durante il periodo il tuo portafoglio potrebbe scendere a 25.000 euro" },
-            { value: "medio", text: "Dopo 10 anni avrai 75.000 euro, ma durante il periodo il tuo portafoglio potrebbe scendere a 40.000 euro" },
-            { value: "basso", text: "Dopo 10 anni avrai 60.000 euro con certezza." }
-        ]
     }
 ];
 
@@ -125,7 +106,7 @@ function renderQuestion() {
 
         const optionCard = document.createElement("button");
         optionCard.className = "option-card";
-        optionCard.onclick = () => selectOption(question.id, opt.value);
+        optionCard.onclick = () => selectOption(question.id, opt.value, optionCard);
 
         optionCard.innerHTML = `
             <div class="option-badge">${optionLetter}</div>
@@ -139,16 +120,11 @@ function renderQuestion() {
 /**
  * Handles selection of an option and advances the quiz
  */
-function selectOption(questionId, value) {
+function selectOption(questionId, value, card) {
     userAnswers[questionId] = value;
 
     // Visual feedback for click
-    const cards = document.querySelectorAll(".option-card");
-    cards.forEach(c => {
-        if (c.querySelector(".option-text").innerText.includes(value)) {
-            c.classList.add("selected");
-        }
-    });
+    card.classList.add("selected");
 
     setTimeout(() => {
         if (currentQuestionIndex < questions.length - 1) {
@@ -203,10 +179,9 @@ function submitEmail(event) {
     submitBtn.disabled = true;
     submitBtn.innerHTML = `Elaborazione... <i class="fa-solid fa-circle-notch fa-spin icon-right"></i>`;
 
-    // 1. Save locally to localStorage for testing / fallback
-    saveEmailLocally(userEmail, userAnswers);
-
-    // 2. Submit to external endpoint if configured
+    // Submit to external endpoint if configured.
+    // Only the email and the consent are sent: quiz answers and profile stay in the browser,
+    // so that no personal financial profile is linked to an identifiable person.
     if (EMAIL_CAPTURE_ENDPOINT) {
         fetch(EMAIL_CAPTURE_ENDPOINT, {
             method: "POST",
@@ -216,8 +191,9 @@ function submitEmail(event) {
             },
             body: JSON.stringify({
                 email: userEmail,
-                answers: userAnswers,
-                profile: calculateProfile()
+                source: "Quiz - iscrizione newsletter",
+                newsletter_consent: true,
+                consent_timestamp: new Date().toISOString()
             })
         })
             .then(() => showResult())
@@ -235,27 +211,15 @@ function submitEmail(event) {
 }
 
 /**
- * Saves captured email and answers to localStorage
+ * Shows the result without subscribing to the newsletter
  */
-function saveEmailLocally(email, answers) {
-    try {
-        const key = "finpol_leads";
-        const existingLeads = JSON.parse(localStorage.getItem(key)) || [];
-        existingLeads.push({
-            email: email,
-            answers: answers,
-            profile: calculateProfile(),
-            timestamp: new Date().toISOString()
-        });
-        localStorage.setItem(key, JSON.stringify(existingLeads));
-        console.log("Lead saved locally:", { email, answers });
-    } catch (e) {
-        console.error("Error saving lead locally:", e);
-    }
+function skipEmail() {
+    document.getElementById("btnSkipEmail").disabled = true;
+    showResult();
 }
 
 /**
- * Profiling Algorithm (Deterministic Rules)
+ * Readiness check (Deterministic Rules)
  */
 function calculateProfile() {
     // Rule 1: Debiti = si -> DEBITI (Semaforo Rosso)
@@ -273,35 +237,8 @@ function calculateProfile() {
         return "NO_RISPARMIO";
     }
 
-    // Rule 4: Debiti = no, Emergenza = si, Risparmio = si
-    // Determine risk level: minimum of risk allowed by time horizon and stated risk tolerance
-    // Risk scale: 1 = basso, 2 = medio, 3 = alto
-    const orizzonte = userAnswers.orizzonte;
-    const rischio = userAnswers.rischio;
-
-    let maxRiskByHorizon = 1; // Default to basso
-    if (orizzonte === "medio") {
-        maxRiskByHorizon = 2;
-    } else if (orizzonte === "lungo") {
-        maxRiskByHorizon = 3;
-    }
-
-    let statedRisk = 1; // Default to basso
-    if (rischio === "medio") {
-        statedRisk = 2;
-    } else if (rischio === "alto") {
-        statedRisk = 3;
-    }
-
-    const finalRiskLevel = Math.min(maxRiskByHorizon, statedRisk);
-
-    if (finalRiskLevel === 3) {
-        return "ALTO";
-    } else if (finalRiskLevel === 2) {
-        return "MEDIO";
-    } else {
-        return "BASSO";
-    }
+    // Rule 4: Debiti = no, Emergenza = si, Risparmio = si -> PRONTO (Semaforo Verde)
+    return "PRONTO";
 }
 
 /**
@@ -313,7 +250,7 @@ function showResult(forcedProfile = null) {
 
     const disclaimerHTML = `
         <div class="disclaimer-text" style="margin-bottom: 2rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1rem; text-align: left; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
-            <strong>Nota Educativa Importante:</strong> I risultati di questo test hanno scopo puramente educativo e didattico. Non costituiscono consulenza finanziaria personalizzata ai sensi del D.Lgs. 58/1998 (TUF) e della Direttiva MiFID II. Le strategie descritte sono esempi generali. Prima di prendere decisioni, valuta la tua situazione con l'aiuto di un Consulente Finanziario Autonomo iscritto all'OCF.
+            <strong>Nota Educativa Importante:</strong> I risultati di questo test hanno scopo puramente educativo e didattico. Non costituiscono consulenza finanziaria personalizzata ai sensi del D.Lgs. 58/1998 (TUF) e della Direttiva MiFID II e non indicano alcuno strumento finanziario adatto a te. Il risultato si basa su 3 risposte semplificate e non considera la tua situazione complessiva (patrimonio, reddito, conoscenze ed esperienza, obiettivi, situazione fiscale). I principi descritti sono concetti generali di finanza personale. Prima di prendere decisioni, valuta la tua situazione con l'aiuto di un Consulente Finanziario Autonomo iscritto all'OCF.
         </div>
     `;
 
@@ -334,13 +271,13 @@ function showResult(forcedProfile = null) {
                     <h3><i class="fa-solid fa-shield"></i> Principio di finanza personale:</h3>
                     <p>Dal punto di vista dell'educazione finanziaria, si ritiene solitamente inefficiente iniziare a investire nei mercati se si hanno contemporaneamente debiti attivi con tassi d'interesse elevati.</p>
                     <ul>
-                        <li><strong>Rendimento matematico:</strong> Estinguere anticipatamente un debito al consumo equivale matematicamente a ottenere un rendimento netto garantito pari al tasso d'interesse evitato.</li>
+                        <li><strong>Rendimento matematico:</strong> Estinguere anticipatamente un debito al consumo equivale matematicamente a ottenere un rendimento certo pari al tasso d'interesse evitato (al netto di eventuali penali di estinzione anticipata).</li>
                         <li><strong>Flusso di cassa:</strong> Ridurre l'indebitamento libera flusso di cassa mensile, gettando le basi per un'eventuale futura pianificazione degli investimenti.</li>
                     </ul>
                 </div>
 
-                <a href="../index.html#portafogli" class="btn btn-primary">
-                    Scopri i portafogli d'esempio <i class="fa-solid fa-arrow-right icon-right"></i>
+                <a href="https://www.youtube.com/watch?v=IK5a_gfgqzQ" target="_blank" rel="noopener" class="btn btn-primary">
+                    Guarda il video: i 4 casi in cui investire è dannoso <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
         `;
@@ -366,8 +303,8 @@ function showResult(forcedProfile = null) {
                     </ul>
                 </div>
 
-                <a href="../index.html#portafogli" class="btn btn-primary">
-                    Scopri i portafogli d'esempio <i class="fa-solid fa-arrow-right icon-right"></i>
+                <a href="https://www.youtube.com/watch?v=IK5a_gfgqzQ" target="_blank" rel="noopener" class="btn btn-primary">
+                    Guarda il video: i 4 casi in cui investire è dannoso <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
         `;
@@ -393,87 +330,35 @@ function showResult(forcedProfile = null) {
                     </ul>
                 </div>
 
-                <a href="../index.html#portafogli" class="btn btn-primary">
-                    Scopri i portafogli d'esempio <i class="fa-solid fa-arrow-right icon-right"></i>
+                <a href="https://www.youtube.com/watch?v=IK5a_gfgqzQ" target="_blank" rel="noopener" class="btn btn-primary">
+                    Guarda il video: i 4 casi in cui investire è dannoso <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
         `;
-    } else if (profile === "BASSO") {
+    } else if (profile === "PRONTO") {
         resultHTML = disclaimerHTML + `
-            <div class="result-blu">
+            <div class="result-verde">
                 <div class="result-header">
                     <div class="result-icon-box">
-                        <i class="fa-solid fa-shield-halved"></i>
+                        <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <div class="result-badge">
-                        <i class="fa-solid fa-circle"></i> Prudente
+                        <i class="fa-solid fa-circle"></i> Semaforo Verde
                     </div>
-                    <h2 class="title">Portafoglio Prudente</h2>
+                    <h2 class="title">Hai le basi per iniziare a informarti</h2>
                 </div>
-                
+
                 <div class="result-strategy-card">
-                    <h3><i class="fa-solid fa-percentage"></i> Stima didattica: ~ 3% annuo nominale</h3>
-                    <p>Nei modelli didattici, un orizzonte temporale breve o una forte preferenza per la stabilità vengono solitamente associati a portafogli con volatilità ridotta, escludendo l'esposizione azionaria volatile.</p>
+                    <h3><i class="fa-solid fa-book-open"></i> Concetto chiave:</h3>
+                    <p>Secondo i principi base della finanza personale, assenza di debiti costosi, un fondo d'emergenza e una capacità di risparmio regolare sono i prerequisiti da cui partire prima di valutare qualsiasi investimento.</p>
                     <ul>
-                        <li><strong>Protezione e Liquidità:</strong> In questo scenario, l'obiettivo teorico primario è cercare di mitigare l'inflazione evitando forti oscillazioni negative nel breve periodo.</li>
-                        <li><strong>Esempi di strumenti:</strong> La teoria associa spesso a questo profilo strumenti monetari come Conti Deposito, conti remunerati, ETF monetari o obbligazioni governative a breve scadenza.</li>
+                        <li><strong>Prossimo passo:</strong> Capire come funzionano le principali asset class (azioni, obbligazioni, liquidità, oro) e come cambia il rapporto tra rischio e rendimento al variare dell'orizzonte temporale.</li>
+                        <li><strong>Da valutare con attenzione:</strong> I tuoi obiettivi, i tempi in cui potresti aver bisogno del denaro e quanto riusciresti a sopportare oscillazioni anche forti del valore investito.</li>
                     </ul>
                 </div>
 
                 <a href="../index.html#portafogli" class="btn btn-primary">
-                    Scopri il portafoglio adatto a te <i class="fa-solid fa-arrow-right icon-right"></i>
-                </a>
-            </div>
-        `;
-    } else if (profile === "MEDIO") {
-        resultHTML = disclaimerHTML + `
-            <div class="result-giallo">
-                <div class="result-header">
-                    <div class="result-icon-box">
-                        <i class="fa-solid fa-scale-balanced"></i>
-                    </div>
-                    <div class="result-badge">
-                        <i class="fa-solid fa-circle"></i> Bilanciato
-                    </div>
-                    <h2 class="title">Portafoglio Bilanciato</h2>
-                </div>
-                
-                <div class="result-strategy-card">
-                    <h3><i class="fa-solid fa-percentage"></i> Stima didattica: ~ 5% annuo nominale</h3>
-                    <p>Un orizzonte temporale di medio termine e un'accettazione moderata della volatilità sono didatticamente associabili a strategie volte a bilanciare la crescita del capitale e il controllo delle oscillazioni.</p>
-                    <ul>
-                        <li><strong>Allocazione Mista:</strong> Nei modelli di finanza personale, questo si traduce spesso in un portafoglio equilibrato, che combina componenti azionarie (motore di crescita) e obbligazionarie o auree (mitigazione del rischio).</li>
-                    </ul>
-                </div>
-
-                <a href="../index.html#portafogli" class="btn btn-primary">
-                    Scopri il portafoglio adatto a te <i class="fa-solid fa-arrow-right icon-right"></i>
-                </a>
-            </div>
-        `;
-    } else if (profile === "ALTO") {
-        resultHTML = disclaimerHTML + `
-            <div class="result-rosso">
-                <div class="result-header">
-                    <div class="result-icon-box">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-                    <div class="result-badge">
-                        <i class="fa-solid fa-circle"></i> Dinamico
-                    </div>
-                    <h2 class="title">Portafoglio Dinamico</h2>
-                </div>
-                
-                <div class="result-strategy-card">
-                    <h3><i class="fa-solid fa-percentage"></i> Stima didattica: ~ 7-8% annuo nominale</h3>
-                    <p>Orizzonti temporali molto lunghi e una buona tolleranza alle fluttuazioni sono associati nella teoria finanziaria a strategie orientate alla massimizzazione della crescita, accettando l'alta volatilità.</p>
-                    <ul>
-                        <li><strong>Prevalenza Azionaria:</strong> Secondo i principi base degli investimenti storici, orizzonti lunghi (10+ anni) permettono di tollerare portafogli a forte o totale prevalenza azionaria, che storicamente presentano i rendimenti attesi più elevati.</li>
-                    </ul>
-                </div>
-
-                <a href="../index.html#portafogli" class="btn btn-primary">
-                    Scopri il portafoglio adatto a te <i class="fa-solid fa-arrow-right icon-right"></i>
+                    Scopri come si costruisce un portafoglio <i class="fa-solid fa-arrow-right icon-right"></i>
                 </a>
             </div>
         `;
@@ -488,7 +373,7 @@ function showResult(forcedProfile = null) {
     }
 }
 
-// Allow direct preview of results via URL parameter (e.g., ?result=MEDIO)
+// Allow direct preview of results via URL parameter (e.g., ?result=PRONTO)
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const forcedResult = urlParams.get('result');

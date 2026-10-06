@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" type="image/png" href="../logo/logo_render.png">
-    <title>Finpol Quiz - Come dovresti investire?</title>
+    <title>Finpol Quiz - Sei pronto a investire?</title>
     <meta name="description"
-        content="Nella tua situazione ha senso investire? Se sì, come? Rispondi a 4 domande e scopri il risultato.">
+        content="Un quiz didattico di 3 domande sui prerequisiti della finanza personale: debiti, fondo emergenza e capacità di risparmio.">
 
     <!-- Google Fonts: Plus Jakarta Sans for ultra-modern look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,7 @@
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 
 <body>
@@ -28,7 +28,7 @@
         <!-- Progress Bar (Hidden on Start and Result) -->
         <div class="progress-container" id="progressContainer" style="display: none;">
             <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
-            <div class="progress-text" id="progressText">Domanda 1 di 4</div>
+            <div class="progress-text" id="progressText">Domanda 1 di 3</div>
         </div>
 
         <!-- 1. WELCOME SCREEN -->
@@ -39,14 +39,14 @@
                         style="max-width: 100%; height: auto; max-height: 200px; cursor: pointer;">
                 </a>
             </div>
-            <h1 class="title">Come dovresti investire?</h1>
-            <p class="subtitle">Nella tua situazione ha senso investire? Se sì, come? Rispondi a 5 domande e scopri il
-                risultato.</p>
+            <h1 class="title">Sei pronto a investire?</h1>
+            <p class="subtitle">Un quiz didattico di 3 domande per verificare se hai i prerequisiti di base prima di
+                iniziare a informarti sugli investimenti.</p>
 
             <div class="features-list">
                 <div class="feature-item">
                     <i class="fa-solid fa-bolt feature-icon"></i>
-                    <span> Meno di 60 secondi </span>
+                    <span> Meno di 30 secondi </span>
                 </div>
                 <div class="feature-item">
                     <i class="fa-solid fa-graduation-cap feature-icon"></i>
@@ -73,7 +73,8 @@
                 <i class="fa-solid fa-envelope-open-text header-large-icon"></i>
             </div>
             <h2 class="title">Hai finito!</h2>
-            <p class="subtitle">Inserisci la tua email per sbloccare il tuo verdetto e ricevere il risultato.</p>
+            <p class="subtitle">Vuoi ricevere anche la newsletter di Finpol con nuovi contenuti didattici? È
+                facoltativo: puoi vedere il risultato in ogni caso.</p>
 
             <form id="emailForm" onsubmit="submitEmail(event)">
                 <div class="input-group">
@@ -84,16 +85,19 @@
                 <div class="privacy-consent">
                     <input type="checkbox" id="consentCheckbox" required>
                     <label for="consentCheckbox">
-                        Acconsento a ricevere la newsletter di Finpol e comunicazioni di marketing. Ho letto e accetto
-                        la <a href="https://finpol.substack.com/about" target="_blank">Privacy Policy</a>.
+                        Acconsento a ricevere la newsletter di Finpol e comunicazioni sui suoi prodotti. Ho letto
+                        l'<a href="../privacy.html" target="_blank">Informativa privacy</a>.
                     </label>
                 </div>
                 <button type="submit" class="btn btn-primary" id="btnSubmitEmail">
-                    Sblocca Risultato
+                    Iscrivimi e vedi il risultato
                 </button>
             </form>
-            <p class="privacy-note"><i class="fa-solid fa-shield-halved"></i> Rispettiamo la tua privacy. Niente spam.
-                Puoi disiscriverti in 1 click.</p>
+            <button type="button" class="btn btn-skip" id="btnSkipEmail" onclick="skipEmail()">
+                Vedi il risultato senza iscriverti
+            </button>
+            <p class="privacy-note"><i class="fa-solid fa-shield-halved"></i> Le tue risposte al quiz non vengono
+                salvate né associate alla tua email. Niente spam, puoi disiscriverti in 1 click.</p>
         </section>
 
         <!-- 4. RESULT SCREEN -->
@@ -105,9 +109,10 @@
     <footer class="app-footer">
         <p class="disclaimer-text"><strong>Disclaimer Legale:</strong> Le informazioni e i risultati forniti da questo
             test hanno scopo puramente informativo ed educativo e non costituiscono consulenza finanziaria
-            personalizzata, sollecitazione al pubblico risparmio o raccomandazione d'investimento. Aleandro Palazzo /
-            Finpol non è responsabile per le scelte finanziarie effettuate dagli utenti. Prima di investire, fai le tue
-            ricerche personali o consulta un professionista abilitato.</p>
+            personalizzata ai sensi del D.Lgs. 58/1998 (TUF), offerta al pubblico di prodotti finanziari o
+            raccomandazione d'investimento. Il quiz non valuta l'adeguatezza di alcuno strumento finanziario rispetto
+            alla tua situazione. Aleandro Palazzo / Finpol non è responsabile per le scelte finanziarie effettuate dagli
+            utenti. Prima di investire, fai le tue ricerche personali o consulta un professionista abilitato.</p>
         <p>&copy; 2026 Finpol.it | Sviluppato da Aleandro Palazzo.</p>
     </footer>
 

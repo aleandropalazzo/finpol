@@ -762,3 +762,17 @@ body {
     flex-direction: column;
     gap: 0.35rem;
 }
+
+/* Skip newsletter (risultato accessibile senza consenso marketing) */
+.btn-skip {
+    margin-top: 0.75rem;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+    font-weight: 600;
+}
+
+.btn-skip:hover {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+}
